@@ -6,32 +6,23 @@ import java.util.Calendar;
 public class Reservation { //예약 
     
     public Reservation() {
-        // TODO Auto-generated constructor stub
     }
-    //random도 여기서
+    
     public Reservation(String customId,int price,int num){
     	this.customId = customId;
     	this.date = simpledateformat.format(calendar.getTime());
     	this.price = price;
     	this.num = num;
-    	//(int)(Math.random()*100000)+500000
     } 
     
     
-        
-    
-    
     private String customId; //회원 아이디
-    //private SimpleDateFormat date; //예매 일자
     private String date; //예매 일자
     private int price; //관람료
     private int num; //예매번호
     
     Calendar calendar = Calendar.getInstance();
-    SimpleDateFormat simpledateformat = new SimpleDateFormat("yyyy년MM월dd일HH시mm분");
-    //비밀번호?
-    //좌석?
-    //공연 종류?
+    SimpleDateFormat simpledateformat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
     
     public void reservationBallet1() {
         this.date = simpledateformat.format(calendar.getTime());
@@ -43,9 +34,7 @@ public class Reservation { //예약
     public String getCustomId() {
         return customId;
     }
-//    public SimpleDateFormat getDate() {
-//        return date;
-//    }
+
     public int getPrice() {
         return price;
     }
@@ -53,7 +42,6 @@ public class Reservation { //예약
     public void setNum(int num) {
         this.num = num;
     }
-    
     
     public int getNum() {
         return num;

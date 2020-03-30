@@ -2,6 +2,7 @@ package kr.or.bit;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,9 +12,8 @@ public class Customer {
 	Scanner scanner = new Scanner(System.in);
 	
 	private String customId;
-	private String customPwd; // int > String 변경
-	private List<Reservation> reservation = new ArrayList<Reservation>(); // 예매 - 안되면 함수로..... public List<Reservation> reservation(){return null};
-	//Reservation[][] res = showinfo.seat;
+	private String customPwd;
+	private List<Reservation> reservation = new ArrayList<Reservation>();
 	int row, col; //좌석의 열과행 
 	String showDate; //날짜선택
 	Reservation reservation1;
@@ -31,8 +31,6 @@ public class Customer {
 
 	
 	public void reserve(Admin admin) { //예매함수(Admin타입으로 파라미터를받음)
-		
-		//Reservation reservation = new Reservation();
 		
 		Loop:while(true) {
 			
@@ -75,9 +73,7 @@ public class Customer {
 									int a = (int)(Math.random()*100000)+500000;
 									reservation.add(new Reservation(customId,30000,a));
 									admin.setTotalBalance(30000);
-									//reservation.add(reservation1.reservationBallet1());
 									
-									//reservation1.toString();
 									System.out.println("티켓번호는 : " + reservation.get(i).getNum());
 									System.out.println("날짜는 : " + reservation.get(i).getDate());
 								
@@ -114,7 +110,6 @@ public class Customer {
                                     reservation.add(new Reservation(customId,30000,a));
                                     admin.setTotalBalance(30000);
                                     
-                                    //reservation1.toString();
                                     System.out.println("티켓번호는 : " + reservation.get(i).getNum());
                                     System.out.println("날짜는 : " + reservation.get(i).getDate());
 	                                    
@@ -132,31 +127,7 @@ public class Customer {
 			
 				else {
 					System.out.println("날짜를 제대로 입력해주세요...");
-				}
-				
-//				System.out.println("날짜를 선택하세요: ");
-//				//날짜 선택 로직 들어갈 자리 4.2
-//				System.out.println("===========좌석현황표===========");
-//				//admin.showselection.showList.get(0).getSeat();
-//				//임의 index
-//				System.out.println("좌석선택:");
-//				
-//				
-//				
-//				int a = (int)(Math.random()*100000)+900000;
-//				reservation.add(new Reservation(customId,"23",20000,a));
-//				//reservation.get(0).setNum(a);
-//				//여기서 index 어떻게...?
-//				
-//				System.out.println("예매정보 출력:"+reservation.get(0).toString());		
-//				System.out.println("예매가 완료되었습니다. [예매번호: ");
-				
-//				int a = reservation.getPrice();
-//				int b = admin.getTotalBalance();
-//				System.out.println(b += a);
-//				
-				
-				
+				}				
 				break;
 				
 			case "2": //음악회 공연선택시
@@ -363,19 +334,13 @@ public class Customer {
 	
 	
 	public void checkReserve() { // 예약 확인
-		Loop1: for(int i=0; i<reservation.size(); i++) {
-			if(reservation.get(i).getCustomId().equals(customId)) {
-				System.out.println("======예매 내역======");
-				System.out.printf("예매번호 \t 공연종류 \t 날짜 및 시간 \t 좌석");
-				System.out.printf("%d \t %s \t %d \t %d", reservation.get(i).getNum(), reservation.get(i), reservation.get(i).getDate(), reservation.get(i));				
-			} else {
-				System.out.println("예매 내역이 없습니다.");
-				break Loop1;
-			}
+		Iterator<Reservation> it = reservation.iterator();
+		while(it.hasNext()) {
+			System.out.println(it.next());
 		}
 	}//checkReserve() End
 	
-	public void cancelReserve(Admin admin) { //예약 취소 티켓번호가나와야 취소할수 있을듯
+	public void cancelReserve(Admin admin) { //예약 취소
 	   
 	    System.out.print("티켓번호를 입력 해주세요 : ");
         int serialNum = Integer.parseInt(scanner.nextLine());

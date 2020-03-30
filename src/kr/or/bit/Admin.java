@@ -9,86 +9,125 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Admin {
+	
     private String adminId;
     private int adminPwd;
     private int totalBalance;
     Scanner scanner = new Scanner(System.in);
-    public List<ShowSelection> addShow = new ArrayList<ShowSelection>(); // 공연 개설 - 안되면 함수로.... public
-                                                                         // List<ShowSelection> addShow(){return null};
+    public List<ShowSelection> addShow = new ArrayList<ShowSelection>();
     ShowSelection showselection = new ShowSelection();
     ShowInfo showinfo = new ShowInfo();
 
-    // ***********동률*****************
-    // 한번 개설된 공연은 더이상 개설할수 없게 해야된다....... + 2개 받기,,,, 공연종류 + 날짜
-    public void addConcert() { // 공연개설(private 해버리면 공연개설목록이 관리자로그인 메뉴에서 안보임)
-        File file = new File("show.txt");
-        FileWriter filewriter = null;
-        BufferedWriter bufferedwriter = null;
-
+    public void addConcert() { // 공연 개설
         Loop: while (true) {
-            System.out.println("어떤 공연을 개설하시겠습니까??");
+            System.out.println("어떤 공연을 개설하시겠습니까?");
             System.out.println("1.발레");
             System.out.println("2.음악회");
             System.out.println("3.오페라");
-            System.out.println("4.adminLogin 메뉴로 돌아가기");
-            System.out.print("1~4중하나를 입력하세요:");
-            int selection = Integer.parseInt(scanner.nextLine());
-
-            switch (selection) {
-            case 1: // 발레 공연을 개설
+            System.out.println("4.Admin Login 메뉴로 돌아가기");
+            System.out.print("1~4 중 하나를 입력하세요: "); 
+            String selection = scanner.nextLine();
+            
+           Loop2 : switch (selection) {
+            case "1": // 발레 공연 개설
                 System.out.println("개설할 공연 날짜를 입력하세요(4.1)(4.4)");
-                String showDate = scanner.nextLine();
-                if (showDate.equals("4.1")) {
-                    showselection.Ballet1();
-                    System.out.println("4.1공연이 개설되었습니다");
-                } else if (showDate.equals("4.4")) {
-                    showselection.Ballet2();
-                    System.out.println("4.4공연이 개설되었습니다");
-                } else {
+                String showDate1 = scanner.nextLine();
+                if (showDate1.equals("4.1")) {
+	                for(int i = 0; i<showselection.showList.size(); i++) {
+	                	if(showselection.showList.get(i).getShowDate().equals(showDate1)) {
+	                		System.out.println("이미 4.1 발레 공연은 개설되었습니다...");
+	                		break Loop2;
+	                	}
+	                } 
+	                //for문을 다 돌았는데 4.1 발레공연이 개설이 안되었으면 발레공연을 개설 
+	                showselection.Ballet1();
+                    System.out.println("4.1 발레 공연이 개설되었습니다");
+           		}
+            	else if (showDate1.equals("4.4")) {
+            		for(int i = 0; i<showselection.showList.size(); i++) {
+		                if(showselection.showList.get(i).getShowDate().equals(showDate1)) {
+		            		System.out.println("이미 4.4 발레 공연은 개설되었습니다...");
+		            		break Loop2;
+		            	}
+            		}
+            		 showselection.Ballet2();
+                     System.out.println("4.4 발레 공연이 개설되었습니다");
+            	}
+                else {
                     System.out.println("잘못 입력하셨습니다. 다시입력하세요");
-
                 }
                 break;
-
-            case 2: // 음악회 개설
-                System.out.println("개설할 공연 날짜를 입력하세요(4.2)(4.6)");
-                String showDate2 = scanner.nextLine();
-                if (showDate2.equals("4.2")) {
-                    showselection.Concert1();
-                    System.out.println("4.2공연이 개설되었습니다");
-                } else if (showDate2.equals("4.6")) {
-                    showselection.Concert2();
-                    System.out.println("4.6공연이 개설되었습니다");
-                } else {
-                    System.out.println("잘못 입력하셨습니다.");
-
-                }
-                break;
-
-            case 3: // 오페라 공연 개설
+            case "2": // 음악회 개설
+            	 System.out.println("개설할 공연 날짜를 입력하세요(4.2)(4.6)");
+                 String showDate2 = scanner.nextLine();
+                 if (showDate2.equals("4.2")) {
+ 	                for(int i = 0;i<showselection.showList.size();i++) {
+ 	                	if(showselection.showList.get(i).getShowDate().equals(showDate2)) {
+ 	                		System.out.println("이미 4.2 음악회공연은 개설되었습니다...");
+ 	                		break Loop2;
+ 	                	}
+ 	                }    
+ 	                 showselection.Concert1();
+                     System.out.println("4.2 음악회 공연이 개설되었습니다");
+            		}
+             	else if (showDate2.equals("4.6")) {
+             		for(int i = 0;i<showselection.showList.size();i++) {
+ 		                if(showselection.showList.get(i).getShowDate().equals(showDate2)) {
+ 		                	System.out.println("이미 4.6 음악회공연은 개설되었습니다...");
+ 	                		break Loop2;
+ 		            	}
+             		}
+             		showselection.Concert2();
+                    System.out.println("4.6 음악회 공연이 개설되었습니다");
+             	}
+                 else {
+                     System.out.println("잘못 입력하셨습니다. 다시입력하세요");
+                 }
+                 break;
+            case "3": // 오페라 공연 개설
                 System.out.println("개설할 공연 날짜를 입력하세요(4.3)(4.5)(4.7)");
                 String showDate3 = scanner.nextLine();
                 if (showDate3.equals("4.3")) {
-                    showselection.Opera1();
-                    System.out.println("4.3공연이 개설되었습니다");
-                } else if (showDate3.equals("4.5")) {
-                    showselection.Opera2();
-                    System.out.println("4.5공연이 개설되었습니다");
-                } else if (showDate3.equals("4.7")) {
-                    showselection.Opera3();
-                    System.out.println("4.7공연이 개설되었습니다");
-                } else {
-                    System.out.println("잘못 입력하셨습니다.");
-
+	                for(int i = 0;i<showselection.showList.size();i++) {
+	                	if(showselection.showList.get(i).getShowDate().equals(showDate3)) {
+	                		System.out.println("이미 4.3 오페라공연은 개설되었습니다...");
+	                		break Loop2;
+	                	}
+	                } 
+	                showselection.Opera1();
+                    System.out.println("4.3 오페라 공연이 개설되었습니다");
+           		}
+            	else if (showDate3.equals("4.5")) {
+            		for(int i = 0;i<showselection.showList.size();i++) {
+		                if(showselection.showList.get(i).getShowDate().equals(showDate3)) {
+		                	System.out.println("이미 4.5 오페라공연은 개설되었습니다...");
+	                		break Loop2;
+		            	}
+            		}
+            		showselection.Opera2();
+            		System.out.println("4.5 오페라 공연이 개설되었습니다");
+            	}
+            	else if (showDate3.equals("4.7")) {
+            		for(int i = 0;i<showselection.showList.size();i++) {
+		                if(showselection.showList.get(i).getShowDate().equals(showDate3)) {
+		                	System.out.println("이미 4.7 오페라공연은 개설되었습니다...");
+	                		break Loop2;
+		            	}
+            		}
+            		showselection.Opera3();
+            		System.out.println("4.7 오페라 공연이 개설되었습니다");
+            	}
+                else {
+                    System.out.println("잘못 입력하셨습니다. 다시입력하세요");
                 }
                 break;
-            case 4:// adminLogin 메뉴로 돌아가기
+            case "4":// adminLogin 메뉴로 돌아가기
+            	System.out.println("adminLogin 메뉴로 돌아갑니다");
                 break Loop; // while문을 탈출함
             default:
+            	System.out.println("잘못된 값 입력..1~4 중 하나를 선택하세요");
                 break;
-
             }// switch End
-
         } // Loop:while End
     }// addConcert() End
 
@@ -110,7 +149,6 @@ public class Admin {
 
                     for (int i = 0; i < showselection.showList.size(); i++) {
                         if (showselection.showList.get(i).getShowDate().equals("4.1")) {
-                            // showselection.showList.get(i).getShowType().equals("Ballet1")
                             System.out.println("시작 시간:19:00" + " " + "종료시간:22:00");
 
                             System.out.println("수정할 시작시간을 입력하세요");
@@ -165,7 +203,6 @@ public class Admin {
 
                     for (int i = 0; i < showselection.showList.size(); i++) {
                         if (showselection.showList.get(i).getShowDate().equals("4.2")) {
-                            // showselection.showList.get(i).getShowType().equals("Ballet1")
                             System.out.println("시작 시간:19:00" + " " + "종료시간:21:00");
 
                             System.out.println("수정할 시작시간을 입력하세요");
@@ -221,7 +258,6 @@ public class Admin {
 
                     for (int i = 0; i < showselection.showList.size(); i++) {
                         if (showselection.showList.get(i).getShowDate().equals("4.3")) {
-                            // showselection.showList.get(i).getShowType().equals("Ballet1")
                             System.out.println("시작 시간:14:00" + " " + "종료시간:17:00");
 
                             System.out.println("수정할 시작시간을 입력하세요");
@@ -408,14 +444,11 @@ public class Admin {
         System.out.println(a);
     }//checkList() End
 
-    // ***********뒤*****************
-    public void checkBalance() { // 총매출 확인 //고객까지 같이 봐야함.... 뒷줄
+
+    public void checkBalance() { // 총 매출 확인
         System.out.println("총매출: " + this.totalBalance);
     }// checkBalance() End
 
-//	private void end() {// 종료
-//	
-//	}// end() End
 
     public String getAdminId() {
         return adminId;
